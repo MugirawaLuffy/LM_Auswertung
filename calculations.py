@@ -54,6 +54,18 @@ def calculate_sensor_div_expectation(wrapper: CalculationWrapper):
         sensor.additional_payload.update({"expected_div": sum / count})
 
 
+def calculate_sensor_div_variance(wrapper: CalculationWrapper):
+    for sensor in wrapper.sensors:
+        avg = sensor.additional_payload.get("expected_div")
+        count = 0
+        sum = 0
+        for div in sensor.additional_payload.get("deviations"):
+            count += 1
+            sum += pow(avg-div, 2)
+
+        sensor.additional_payload.update({"deviance": sum / (count - 1)})
+
+
 def print_expectation_per_sensor(wrapper: CalculationWrapper):
     for sensor in wrapper.sensors:
         print("Expected deviation for '" + str(sensor.sensor_name) + "': " + str(

@@ -9,11 +9,13 @@ def main():
 
     calculate_deviations_per_sensor(calculation_wrapper)
     calculate_sensor_div_expectation(calculation_wrapper)
+    calculate_sensor_div_variance(calculation_wrapper)
 
     plot_deviation_per_sensor(calculation_wrapper,
                               show_avg_in_plot=False,
                               show_avg_under_plot=True,
-                              show_variation_under_plot=True)
+                              show_variation_under_plot=True,
+                              round_to=3)
 
     print_expectation_per_sensor(calculation_wrapper)
 
