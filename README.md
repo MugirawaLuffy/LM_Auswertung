@@ -20,6 +20,9 @@ ist dafür da, um Kollisionen bei gleichnamigen Dateien zu vermeiden, wenn sie e
 
 ### Demo
 Oben gezeigte Demo Eingabe erzeugt zum Beispiel:
-![both_under](analyse/demo_1/demoboth_under.png)
+![both_under](analyse/demo_1/Demo%20Route_both_under.png)
+
+oder ein paar CDF plots, wie zum Beispiel:
+![default cdf](analyse/demo_1/cdf/gps_default.png)
 
 Die dargestellten Daten sind natürlich Käse.
