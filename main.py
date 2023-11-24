@@ -2,7 +2,7 @@ import os
 import sys
 from calculations import *
 from plots import *
-
+import shutil
 
 def generate_from_path(path, save_to=None):
     data_series: DataSeries = DataSeries.parse_from_csv(path)
@@ -50,6 +50,9 @@ def main():
     print('Processing ', len(sys.argv), ' files:')
     files = sys.argv[1:]
     print(files)
+
+    if os.path.isdir(path):
+        shutil.rmtree(path)
 
     if not os.path.isdir(path):
         os.makedirs(path)
