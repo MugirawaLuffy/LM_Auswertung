@@ -1,3 +1,4 @@
+from copy import copy
 from dataclasses import dataclass
 
 CSV_ROW_DELIMITER = "\n"
@@ -35,16 +36,18 @@ class Measure:
     @staticmethod
     def parse_from_csv_line(line: str):
         cols = line.split(CSV_COL_DELIMITER)
-        to_return = Measure
+        to_return: Measure = Measure(
+            Coordinate(long=float(cols[0]), lat=float(cols[1])), sensor_readings=[])
 
-        to_return.ground_truth = Coordinate(long=float(cols[0]), lat=float(cols[1]))
         to_return.timestamp = int(cols[2])
-        to_return.sensor_readings = []
 
         for lon, lat in pairwise(cols[3:]):
             to_return.sensor_readings.append(Coordinate(long=float(lon), lat=float(lat)))
 
         return to_return
+
+    def __str__(self):
+        return str(self.sensor_readings)
 
 
 @dataclass
@@ -56,14 +59,22 @@ class SensorData:
 
 @dataclass
 class CalculationWrapper:
+    route_name: str
     ground_truth: list[Coordinate]
     sensors: list[SensorData]
+
 
 @dataclass
 class DataSeries:
     sensor_labels: list[str]
     readings: list[Measure]
     ground_truth_route_name: str = "unnamed"
+
+    def __repr__(self):
+        return str(self.readings)
+
+    def __str__(self):
+        return str(self.readings)
 
     @staticmethod
     def parse_from_csv(file_name: str):
@@ -84,7 +95,9 @@ class DataSeries:
 
         # rest of lines contains readings ... parse
         for reading_index in range(1, len(lines)):
-            to_return.readings.append(Measure.parse_from_csv_line(lines[reading_index]))
+            line: Measure = Measure.parse_from_csv_line(lines[reading_index])
+
+            to_return.readings.append(copy(line))
 
         return to_return
 
@@ -107,7 +120,11 @@ class DataSeries:
         for reading in range(len(self.readings)):
             gt.append(self.readings[reading].ground_truth)
 
-        return CalculationWrapper(sensors=sensors, ground_truth=gt)
+        return CalculationWrapper(sensors=sensors, ground_truth=gt, route_name=self.ground_truth_route_name)
+
+    def print_series(self):
+        for r in self.readings:
+            print(r.sensor_readings)
 
 
 def print_sensor_data(wrapper: CalculationWrapper):
@@ -115,7 +132,7 @@ def print_sensor_data(wrapper: CalculationWrapper):
     sensor_names = ""
     for i in range(len(data)):
         sensor_names += data[i].sensor_name
-        if i < (len(data)-1):
+        if i < (len(data) - 1):
             sensor_names += ", "
 
     print("Got {} sensors ({})".format(len(data), sensor_names))
