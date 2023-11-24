@@ -57,5 +57,5 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
 
     if save_to is not None:
         plt.savefig(save_to)
-
-    plt.show()
+    else:
+        plt.show()
