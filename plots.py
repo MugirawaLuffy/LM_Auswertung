@@ -6,7 +6,8 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
                               show_avg_in_plot=False,
                               show_avg_under_plot=False,
                               show_variation_under_plot=False,
-                              round_to = 4):
+                              round_to=4,
+                              save_to=None):
     plt.figure(figsize=(10, 6))
 
     all_divs = []
@@ -23,7 +24,8 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
         plt.plot(divs, label=f"Sensor {wrapper.sensors[i].sensor_name}")
         if (show_avg_in_plot):
             plt.axhline(y=expected, color=f'C{i}', linestyle='--')
-            plt.text(0, expected, f'Avg dist {wrapper.sensors[i].sensor_name} = {expected}', color=f'C{i}', va='center', ha='left')
+            plt.text(0, expected, f'Avg dist {wrapper.sensors[i].sensor_name} = {expected}', color=f'C{i}', va='center',
+                     ha='left')
 
     plt.xlabel('Data Points')
     plt.ylabel('Deviation (m)')
@@ -39,15 +41,21 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
 
     if show_avg_under_plot:
         variations_text = '\n'.join(
-            [f"Erwartungswert Distanz ({wrapper.sensors[i].sensor_name}): {avg} metres\n" for i, avg in enumerate(all_expected)])
+            [f"Erwartungswert Distanz ({wrapper.sensors[i].sensor_name}): {avg} metres\n" for i, avg in
+             enumerate(all_expected)])
         plt.figtext(0.05, 0.01, variations_text, fontsize=11, va="bottom", ha="left")
 
     if show_variation_under_plot and not show_avg_under_plot:
         variations_text = '\n'.join(
-            [f"Standard Abweichung von {wrapper.sensors[i].sensor_name}: +- {variation} metres\n" for i, variation in enumerate(all_variations)])
+            [f"Standard Abweichung von {wrapper.sensors[i].sensor_name}: +- {variation} metres\n" for i, variation in
+             enumerate(all_variations)])
         plt.figtext(0.05, 0.01, variations_text, fontsize=11, va="bottom", ha="left")
     elif show_variation_under_plot:
         variations_text = '\n'.join(
             [f"Standard Abweichung: +- {variation} metres\n" for i, variation in enumerate(all_variations)])
         plt.figtext(0.95, 0.01, variations_text, fontsize=11, va="bottom", ha="right")
+
+    if save_to is not None:
+        plt.savefig(save_to)
+
     plt.show()
