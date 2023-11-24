@@ -17,3 +17,9 @@ Generierte Plots stehen dann in der Ordnerstruktur "Analyse".
 Der Ordner muss vor Programmaufruf gelöscht werden ¯\_(ツ)_/¯. Die letzte Zahl in der Ordnerstruktur 
 ist dafür da, um Kollisionen bei gleichnamigen Dateien zu vermeiden, wenn sie einen generischen Namen wie z.B.
 "reading.csv" haben.
+
+### Demo
+Oben gezeigte Demo Eingabe erzeugt zum Beispiel:
+![both_under](analyse/demo_1/demoboth_under.png)
+
+Die dargestellten Daten sind natürlich Käse.
