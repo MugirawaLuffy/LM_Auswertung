@@ -41,7 +41,9 @@ def generate_from_path(path, save_to=None):
 
     save_to += "/cdf/" # <- following files should be saved in cdf subdir
     for sensor in calculation_wrapper.sensors:
-        plot_cdf_and_confidence(calculation_wrapper.sensors[0], save_to=save_to + sensor.sensor_name + "_default.png")
+        plot_cdf_and_confidence(calculation_wrapper.sensors[0],
+                                save_to=save_to + sensor.sensor_name + "_default.png",
+                                interpolation="1s")
         plot_cdf_and_confidence(calculation_wrapper.sensors[0], save_to=save_to + sensor.sensor_name + "_clean.png",
                                 highlight_50_ci=False,
                                 highlight_95_ci=False,
