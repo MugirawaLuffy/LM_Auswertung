@@ -9,7 +9,8 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
                               show_avg_under_plot=False,
                               show_variation_under_plot=False,
                               round_to=4,
-                              save_to=None):
+                              save_to=None,
+                              interpolation=None):
     plt.figure(figsize=(10, 6))
 
     all_divs = []
@@ -31,7 +32,7 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
 
     plt.xlabel('Data Points')
     plt.ylabel('Deviation (m)')
-    plt.title(f'Sensor Abweichungen für Route "{wrapper.route_name}"')
+    plt.title(f'Sensor Abweichungen für Route "{wrapper.route_name}" (interp: {interpolation})')
     plt.legend()
     plt.grid(True)
 
@@ -71,7 +72,8 @@ def plot_cdf_and_confidence(data: SensorData,
                             highlight_50_ci=True,
                             highlight_95_ci=True,
                             round_to=4,
-                            save_to=None):
+                            save_to=None,
+                            interpolation=None):
     # Extract relevant data
     deviations = data.additional_payload.get("deviations", [])
     expected_div = data.additional_payload.get("expected_div", 0)
@@ -85,7 +87,7 @@ def plot_cdf_and_confidence(data: SensorData,
     plt.figure(figsize=(8, 6))
     plt.plot(x, y, marker='o', linestyle='-', color='b')
     plt.title(f'CDF von {data.sensor_name}')
-    plt.xlabel('Positionierungsfehler')
+    plt.xlabel(f'Positionierungsfehler (interpolation: {interpolation})')
     plt.ylabel('Kumulative Wkt.')
     plt.grid(True)
 

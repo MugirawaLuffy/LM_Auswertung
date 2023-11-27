@@ -24,25 +24,26 @@ def pairwise(iterable):
 class Coordinate:
     long: float
     lat: float
+    timestamp_nano: int = 0
 
 
 @dataclass
 class Measure:
     ground_truth: Coordinate
     sensor_readings: list[Coordinate]
-    timestamp = 0
+    timestamp: int = 0
 
     # CSV has format: GT lon | GT lat | timestamp | s1 long | s1 lat ...
     @staticmethod
     def parse_from_csv_line(line: str):
         cols = line.split(CSV_COL_DELIMITER)
         to_return: Measure = Measure(
-            Coordinate(long=float(cols[0]), lat=float(cols[1])), sensor_readings=[])
+            Coordinate(long=float(cols[0]), lat=float(cols[1]), timestamp_nano=int(cols[2])), sensor_readings=[])
 
         to_return.timestamp = int(cols[2])
 
         for lon, lat in pairwise(cols[3:]):
-            to_return.sensor_readings.append(Coordinate(long=float(lon), lat=float(lat)))
+            to_return.sensor_readings.append(Coordinate(long=float(lon), lat=float(lat), timestamp_nano=int(cols[2])))
 
         return to_return
 

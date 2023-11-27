@@ -76,3 +76,51 @@ def print_deviation_per_sensor(wrapper: CalculationWrapper):
     for sensor in wrapper.sensors:
         for div in sensor.additional_payload.get("deviations"):
             print(div)
+
+
+def readings_interpolated(readings: list[Coordinate], freq_in_millis=1.0):
+    # Sort readings by timestamp
+    sorted_by_time = sorted(readings, key=lambda x: x.timestamp_nano)
+    interpolated = [sorted_by_time[0]]
+
+    # Iterate through the sorted readings
+    for i in range(1, len(sorted_by_time)):
+        reading_lower_interval = sorted_by_time[i - 1]
+        reading_higher_interval = sorted_by_time[i]
+
+        # Calculate time difference between adjacent readings in milliseconds
+        time_diff_millis = int(round((reading_higher_interval.timestamp_nano - reading_lower_interval.timestamp_nano) / 1e6))
+
+        # Calculate the number of intermediate points to insert
+        num_intermediate_points = int(time_diff_millis / (1000 / freq_in_millis))
+
+        if num_intermediate_points > 0:
+            # Calculate step size for linear interpolation
+            long_step = (reading_higher_interval.long - reading_lower_interval.long) / (num_intermediate_points + 1)
+            lat_step = (reading_higher_interval.lat - reading_lower_interval.lat) / (num_intermediate_points + 1)
+
+            # Perform linear interpolation for intermediate points
+            for j in range(1, num_intermediate_points + 1):
+                interpolated_long = reading_lower_interval.long + j * long_step
+                interpolated_lat = reading_lower_interval.lat + j * lat_step
+
+                # Calculate the timestamp for the interpolated point
+                interpolated_timestamp = reading_lower_interval.timestamp_nano + int(
+                    j * (time_diff_millis / (num_intermediate_points + 1)) * 1e6)
+
+                interpolated.append(Coordinate(long=interpolated_long, lat=interpolated_lat,
+                                               timestamp_nano=interpolated_timestamp))
+
+        interpolated.append(reading_higher_interval)
+
+    return interpolated
+
+
+def interpolate_all_readings(calculation_wrapper: CalculationWrapper, freq_in_millis=1.0):
+    # interpolate ground truth
+    calculation_wrapper.ground_truth = readings_interpolated(calculation_wrapper.ground_truth, freq_in_millis)
+
+    for sensor in calculation_wrapper.sensors:
+        sensor.readings = readings_interpolated(sensor.readings)
+
+    return calculation_wrapper
