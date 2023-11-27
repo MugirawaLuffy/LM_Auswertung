@@ -14,7 +14,9 @@ Die CSV Datei muss nach folgendem Schema aufgebaut sein:
 ``python main.py demo.csv demo2.csv ``
 
 Generierte Plots stehen dann in der Ordnerstruktur "Analyse". 
-Der Ordner muss vor Programmaufruf gelöscht werden ¯\_(ツ)_/¯. Die letzte Zahl in der Ordnerstruktur 
+Der Ordner muss vor Programmaufruf gelöscht werden ¯\_(ツ)_/¯. <-- doch nicht (löscht nu auch automatisch)
+
+Die letzte Zahl in der Ordnerstruktur 
 ist dafür da, um Kollisionen bei gleichnamigen Dateien zu vermeiden, wenn sie einen generischen Namen wie z.B.
 "reading.csv" haben.
 
