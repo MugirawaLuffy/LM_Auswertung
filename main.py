@@ -81,19 +81,24 @@ def debug():
     calculation_wrapper = data_series.extract_calc_wrapper()
     calculation_wrapper = interpolate_all_readings(calculation_wrapper)
 
-    print(f"Now got {len(calculation_wrapper.sensors[0].readings)} readings")
-
     calculate_deviations_per_sensor(calculation_wrapper)
     calculate_sensor_div_expectation(calculation_wrapper)
     calculate_sensor_div_variance(calculation_wrapper)
 
-    print("plotting")
     plot_deviation_per_sensor(calculation_wrapper,
                               show_avg_in_plot=False,
                               show_avg_under_plot=True,
                               show_variation_under_plot=True,
-                              round_to=3,)
+                              round_to=3,
+                              interpolation="1s")
 
+    plot_cdf_and_confidence(calculation_wrapper.sensors[0],
+                            highlight_50_ci=False,
+                            highlight_95_ci=False,
+                            interpolation="1s")
+
+    for sensor in calculation_wrapper.sensors:
+        print(sensor.additional_payload.get("deviations"))
 
 if __name__ == '__main__':
     """
@@ -103,5 +108,5 @@ if __name__ == '__main__':
     time.sleep(5)
     print(time.time_ns())
     """
-    # debug()
+
     main()

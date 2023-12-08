@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import arange
 from scipy import stats
 from csv_repository import CalculationWrapper, SensorData
 import matplotlib.pyplot as plt
@@ -58,12 +59,12 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
             [f"Standard Abweichung: +- {variation} metres\n" for i, variation in enumerate(all_variations)])
         plt.figtext(0.95, 0.01, variations_text, fontsize=11, va="bottom", ha="right")
 
+
+
     if save_to is not None:
         plt.savefig(save_to)
     else:
         plt.show()
-
-
 
 
 def plot_cdf_and_confidence(data: SensorData,
@@ -120,6 +121,11 @@ def plot_cdf_and_confidence(data: SensorData,
 
         if highlight_50_ci:
             plt.axvspan(conf_interval_50[0], conf_interval_50[1], color='y', alpha=0.3)
+
+    ax = plt.gca()
+    ax.get_xaxis().get_major_formatter().set_scientific(False)
+    plt.draw()
+    plt.show()
 
     if save_to is not None:
         plt.savefig(save_to)

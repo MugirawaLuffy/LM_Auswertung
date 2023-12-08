@@ -96,7 +96,9 @@ class DataSeries:
 
         # rest of lines contains readings ... parse
         for reading_index in range(1, len(lines)):
-            line: Measure = Measure.parse_from_csv_line(lines[reading_index])
+            line_str = lines[reading_index]
+            if line_str != '':
+                line: Measure = Measure.parse_from_csv_line(line_str)
 
             to_return.readings.append(copy(line))
 
