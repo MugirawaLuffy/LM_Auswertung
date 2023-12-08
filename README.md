@@ -25,6 +25,6 @@ Oben gezeigte Demo Eingabe erzeugt zum Beispiel:
 ![both_under](analyse/demo_1/Demo%20Route_both_under.png)
 
 oder ein paar CDF plots, wie zum Beispiel:
-![default cdf](analyse/demo_1/cdf/gps_default.png)
+![default cdf](analyse/demo_1/cdf/fused2_default.png)
 
 Die dargestellten Daten sind natürlich Käse.
