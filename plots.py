@@ -125,9 +125,9 @@ def plot_cdf_and_confidence(data: SensorData,
     ax = plt.gca()
     ax.get_xaxis().get_major_formatter().set_scientific(False)
     plt.draw()
-    plt.show()
 
     if save_to is not None:
+        print("saving")
         plt.savefig(save_to)
     else:
         plt.show()
