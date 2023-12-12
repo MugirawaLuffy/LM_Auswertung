@@ -28,12 +28,12 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
         plt.plot(divs, label=f"Sensor {wrapper.sensors[i].sensor_name}")
         if (show_avg_in_plot):
             plt.axhline(y=expected, color=f'C{i}', linestyle='--')
-            plt.text(0, expected, f'Avg dist {wrapper.sensors[i].sensor_name} = {expected}', color=f'C{i}', va='center',
+            plt.text(0, expected, f'Avg Dist {wrapper.sensors[i].sensor_name} = {expected}', color=f'C{i}', va='center',
                      ha='left')
 
-    plt.xlabel('Data Points')
-    plt.ylabel('Deviation (m)')
-    plt.title(f'Sensor Abweichungen für Route "{wrapper.route_name}" (interp: {interpolation})')
+    plt.xlabel('Datenpunkt')
+    plt.ylabel('Abweichung (m)')
+    plt.title(f'Sensor Abweichungen für Route "{wrapper.route_name}" (Interp: {interpolation})')
     plt.legend()
     plt.grid(True)
 
@@ -46,7 +46,7 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
 
     if show_avg_under_plot:
         variations_text = '\n'.join(
-            [f"Erwartungswert Distanz ({wrapper.sensors[i].sensor_name}): {avg} metres\n" for i, avg in
+            [f"Erwartungswert Distanz ({wrapper.sensors[i].sensor_name}): {avg} Meter\n" for i, avg in
              enumerate(all_expected)])
         plt.figtext(0.05, 0.01, variations_text, fontsize=11, va="bottom", ha="left")
 
@@ -57,10 +57,8 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
         plt.figtext(0.05, 0.01, variations_text, fontsize=11, va="bottom", ha="left")
     elif show_variation_under_plot:
         variations_text = '\n'.join(
-            [f"Standard Abweichung: +- {variation} metres\n" for i, variation in enumerate(all_variations)])
+            [f"Standard Abweichung: +- {variation} Meter\n" for i, variation in enumerate(all_variations)])
         plt.figtext(0.95, 0.01, variations_text, fontsize=11, va="bottom", ha="right")
-
-
 
     if save_to is not None:
         plt.savefig(save_to)
@@ -89,7 +87,7 @@ def plot_cdf_and_confidence(data: SensorData,
     plt.figure(figsize=(8, 6))
     plt.plot(x, y, marker='o', linestyle='-', color='b')
     plt.title(f'CDF von {data.sensor_name}')
-    plt.xlabel(f'Positionierungsfehler (interpolation: {interpolation})')
+    plt.xlabel(f'Positionierungsfehler (Interpolation: {interpolation})')
     plt.ylabel('Kumulative Wkt.')
     plt.grid(True)
 
