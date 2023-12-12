@@ -21,10 +21,13 @@ ist dafür da, um Kollisionen bei gleichnamigen Dateien zu vermeiden, wenn sie e
 "reading.csv" haben.
 
 ### Demo
-Oben gezeigte Demo Eingabe erzeugt zum Beispiel:
-![both_under](analyse/demo_1/Demo%20Route_both_under.png)
+Eingabe für die beiden Praktikumsrelevanten Messungen ergeben z.B. folgende Messungenauigkeit
+![both_under](analyse/route_innen_1/route1_innen_both_under.png)
 
 oder ein paar CDF plots, wie zum Beispiel:
-![default cdf](analyse/demo_1/cdf/fused2_default.png)
+![default cdf](analyse/route_aussen_2/cdf/GPS_subtle.png)
 
-Die dargestellten Daten sind natürlich Käse.
+Finaler Programmaufrug für die Auswertung ist 
+```bash
+python main.py route_innen.csv route_aussen.csv
+```
