@@ -63,7 +63,8 @@ def calculate_sensor_div_variance(wrapper: CalculationWrapper):
             count += 1
             sum += pow(avg-div, 2)
 
-        sensor.additional_payload.update({"deviance": sum / (count - 1)})
+        emp_abw = sqrt(sum / (count - 1)).real
+        sensor.additional_payload.update({"deviance": emp_abw})
 
 
 def print_expectation_per_sensor(wrapper: CalculationWrapper):

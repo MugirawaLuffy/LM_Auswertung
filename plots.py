@@ -38,7 +38,8 @@ def plot_deviation_per_sensor(wrapper: CalculationWrapper,
     plt.grid(True)
 
     num_data_points = len(all_divs[0])
-    plt.xticks(range(num_data_points))
+    # plt.xticks(range(num_data_points))
+
 
     if show_variation_under_plot or show_avg_under_plot:
         plt.subplots_adjust(bottom=0.3)
@@ -127,7 +128,6 @@ def plot_cdf_and_confidence(data: SensorData,
     plt.draw()
 
     if save_to is not None:
-        print("saving")
         plt.savefig(save_to)
     else:
         plt.show()
